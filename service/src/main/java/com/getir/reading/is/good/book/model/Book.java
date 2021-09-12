@@ -18,4 +18,6 @@ public class Book extends BaseEntity {
     private int numberOfStock = 0;
 
     private String name;
+
+    private double price;
 }

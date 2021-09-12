@@ -1,5 +1,6 @@
 package com.getir.reading.is.good.order.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.getir.reading.is.good.book.model.Book;
 import com.getir.reading.is.good.common.model.BaseEntity;
 import com.getir.reading.is.good.customer.model.Customer;
@@ -26,9 +27,12 @@ public class Order extends BaseEntity {
 
     private int quantity;
 
+    private double purchaseAmount;
+
     @ManyToOne(optional = false)
     private Book orderedBook;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("orders")
     private Customer customer;
 }

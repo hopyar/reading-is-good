@@ -18,6 +18,11 @@ public class BookService {
         if (book.getNumberOfStock() < 0) {
             throw new ReadingIsGoodException("Book quantity can not be less than 0");
         }
+
+        if (book.getPrice() < 0) {
+            throw new ReadingIsGoodException("Book price can not be less than 0");
+        }
+
         return repository.save(book).getId();
     }
 
@@ -34,6 +39,7 @@ public class BookService {
         if (quantity < 1) {
             throw new ReadingIsGoodException("Decrease quantity must be bigger than zero(0)");
         }
+
         Book book = getBookById(bookId);
 
         if (quantity > book.getNumberOfStock()) {

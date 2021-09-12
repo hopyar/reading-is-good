@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -25,7 +26,7 @@ public class OrderController {
     @PostMapping
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
-    public Response placeOrder(@RequestBody Order order, HttpServletResponse response) {
+    public Response placeOrder(@RequestBody Order order, HttpServletResponse response, HttpServletRequest request) {
         try {
             return ResponseUtil.success(service.placeOrder(order));
         } catch (ReadingIsGoodException e) {
@@ -59,7 +60,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping
+    @GetMapping("by-interval")
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     public Response getOrderByInterval(@QueryParam("start-date") Date startDate, @QueryParam("end-date") Date endDate, HttpServletResponse response) {

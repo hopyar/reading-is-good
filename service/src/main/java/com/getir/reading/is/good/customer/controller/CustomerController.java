@@ -7,10 +7,7 @@ import com.getir.reading.is.good.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -30,7 +27,19 @@ public class CustomerController {
         try {
             return ResponseUtil.success(service.saveCustomer(customer));
         } catch (DataIntegrityViolationException e) {
-            return ResponseUtil.fail(400, "This email is already registered", response);
+            return ResponseUtil.fail(400, e.getMessage(), response);
+        } catch (Exception e) {
+            return ResponseUtil.fail(500, e.getMessage(), response);
+        }
+    }
+
+    @GetMapping("{customer-id}/orders")
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
+    public Response getAllOrdersOfCustomer(@PathVariable("customer-id") String customerId, HttpServletResponse response) {
+        try {
+            return ResponseUtil.success(service.getOrders(customerId));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseUtil.fail(400, e.getMessage(), response);
         } catch (Exception e) {
             return ResponseUtil.fail(500, e.getMessage(), response);
         }

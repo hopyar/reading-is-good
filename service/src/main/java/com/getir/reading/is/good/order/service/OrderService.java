@@ -23,12 +23,17 @@ public class OrderService {
 
     public String placeOrder(Order order) {
         synchronized (order.getOrderedBook().getId()) {
+            double bookPrice = bookService.getBookById(order.getOrderedBook().getId()).getPrice();
             bookService.decreaseBookQuantity(order.getOrderedBook().getId(), order.getQuantity());
+            order.setPurchaseAmount(bookPrice * order.getQuantity());
             return orderRepository.save(order).getId();
         }
     }
 
     public String updateStatus(String orderId) {
+        if (orderId == null || orderId.isEmpty()) {
+            throw new ReadingIsGoodException("orderId must be provided");
+        }
         synchronized (orderId) {
             Order order = getOrderById(orderId);
             if (order.getStatus() == OrderStatus.NEW) {

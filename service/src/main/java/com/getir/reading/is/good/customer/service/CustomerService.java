@@ -12,6 +12,8 @@ public class CustomerService {
     private CustomerRepository repository;
 
     public String saveCustomer(Customer customer) {
-        return repository.save(customer).getId();
+        synchronized (customer.getEmail()) {
+            return repository.save(customer).getId();
+        }
     }
 }

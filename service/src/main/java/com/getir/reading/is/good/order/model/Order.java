@@ -26,9 +26,9 @@ public class Order extends BaseEntity {
 
     private int quantity;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Book orderedBook;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Customer customer;
 }

@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseUtil {
 
+    public static Response successWithMessage(String message) {
+        return new Response(ResponseType.SUCCESS, message, null);
+    }
+
     public static Response success(Object data) {
         return new Response(ResponseType.SUCCESS, null, data);
     }

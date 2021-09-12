@@ -1,12 +1,14 @@
 package com.getir.reading.is.good.common.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @MappedSuperclass
 @Getter
+@Setter
 public class BaseEntity {
 
     @Id
